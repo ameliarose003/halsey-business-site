@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase Ready - Videos</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+    <h1>Emergency Preparedness Videos</h1>
+
+    <% videos.forEach(video => { %>
+        <div>
+            <h2><%= video.title %></h2>
+            <iframe width="560" height="315" src="<%= video.url %>" frameborder="0" allowfullscreen></iframe>
+        </div>
+    <% }); %>
+</body>
+</html>
