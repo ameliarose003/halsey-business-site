@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -41,6 +41,6 @@ app.get('/videos', (req, res) => {
 
 // LocalHost:port
 
-app.listen(port, () =>{
-    console.log(`Server running at port:${port}`);
+app.listen(PORT, () =>{
+    console.log(`Server running at port:${PORT}`);
 });
