@@ -6,7 +6,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.redirect('/phases');
+    res.redirect('/home');
 });
 
 // Pages:
@@ -34,7 +34,7 @@ app.get('/videos', (req, res) => {
     res.render('videos', {
         videos: [
             {title: "Emergency Kit Basics", url: "https://www.youtube.com/watch?v=BKo_BJwe3MM"},
-            {title: "Evacuation Planning", url: "https://www.youtube.com/watch?v=4ApKN6JMRFE"}
+            {title: "Evacuation Planning", url: "https://www.youtube.com/embed/4ApKN6JMRFE?si=A_hkKFLidz5nqtcr"}
         ]
     });
 });
