@@ -3,6 +3,7 @@
 body {
     margin: 0;
     font-family: "Anaheim", sans-serif;
+    background-color: rgb(234, 234, 249);
 }
 
 
@@ -63,7 +64,7 @@ header nav a:hover {
 .intro-msg {
     text-align: center;
     background-color: rgb(6, 6, 51);
-    color: whitesmoke;
+    color: rgb(226, 226, 250);
     padding: 20px;
 }
 
@@ -103,6 +104,7 @@ header nav a:hover {
     background-color: rgb(244, 63, 36);
     border-radius: 12px;
     cursor: pointer;
+    border: 2px solid rgb(6, 6, 51);
 }
 
 .home_takeMeTo_btns .takeMeTo_phases {
@@ -124,4 +126,28 @@ footer nav a img {
     width: 30px;
     margin: 10px;
     border-radius: 12px;
+}
+
+/* Responsive Design */
+@media screen and (max-width:900px) {
+    header {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 10px;
+    }
+    .auth-btns {
+        flex-direction: column;
+    }
+    .auth-btns button {
+        margin: 5px;
+    }
+    header nav {
+        flex-direction: column;
+    }
+    #logo_text {
+        margin: 0;
+    }
+    .home_videos {
+        flex-direction: column;
+    }
 }
