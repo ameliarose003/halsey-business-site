@@ -3,14 +3,14 @@
 body {
     margin: 0;
     font-family: "Anaheim", sans-serif;
-    background-color: rgb(234, 234, 249);
+    background-color: #262334;
 }
 
 
 /* GLOBAL HEADER */
 
 header {
-    background-color: rgb(63 47 120);
+    background-color: #262334;
     /* background-color: rgb(27, 27, 101); */
     color: whitesmoke;
     display: grid;
@@ -27,7 +27,7 @@ header a {
 header nav {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -47,15 +47,19 @@ header nav a:hover {
 }
 
 .auth-btns button {
+    margin: 10px;
+    background-color: #262334;
     border-radius: 50%;
     padding: 5px;
     width: 90px;
-    border: 2px solid rgb(6, 6, 52);
+    border: 3px solid white;
+    color: white;
 }
 
 .auth-btns button:hover {
-    background-color: rgb(160, 160, 241);
-    color: rgb(25, 25, 25);
+    background-color: white;
+    color: #262334;
+    border: 3px solid #bb4032;
     cursor: pointer;
 }
 
@@ -63,7 +67,7 @@ header nav a:hover {
 
 .intro-msg {
     text-align: center;
-    background-color: rgb(6, 6, 51);
+    background-color: #201e27;
     color: rgb(226, 226, 250);
     padding: 20px;
 }
@@ -77,6 +81,7 @@ header nav a:hover {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    color: white;
 }
 
 .home_videos div {
@@ -85,6 +90,7 @@ header nav a:hover {
 
 .home_videos div iframe {
     background-color: rgb(63 47 120);
+    border: 2px solid #77131a;
     cursor: pointer;
 }
 
@@ -101,10 +107,10 @@ header nav a:hover {
     padding: 10px;
     font-weight: bold;
     color: whitesmoke;
-    background-color: rgb(244, 63, 36);
+    background-color: #b02f1e;
     border-radius: 12px;
     cursor: pointer;
-    border: 2px solid rgb(6, 6, 51);
+    border: 3px solid #bb4032;
 }
 
 .home_takeMeTo_btns .takeMeTo_phases {
