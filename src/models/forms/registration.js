@@ -1,0 +1,143 @@
+import db from '../db.js';
+import bcrypt from 'bcrypt';
+
+// Hash a plain text password using bcrypt
+// @param {string} plainPassword - password to be hashed
+// @returns {promise<string|null>} returns the hashed password or null if failed
+
+const hashPassword = async (plainPassword) => {
+    try {
+        const cryptedPassword = await bcrypt.hash(plainPassword, 10);
+        return cryptedPassword;
+    } catch (error) {
+        console.error('Error hashing password:', error);
+        return null;
+    }
+};
+
+// Check if an email address is already registred
+// @param {string} email - email to check
+// @returns {promise<boolean>} returns True if email exists, false otherwise
+
+const emailExists = async (email) => {
+    try {
+        const normalizedEmail = email.trim().toLowerCase();
+        const query = 'SELECT COUNT(*) FROM users WHERE email = $1';
+        const result = await db.query(query, [email]);
+
+        const emailCount = parseInt(result.rows[0].count);
+        return emailCount > 0;
+    } catch (error) {
+        console.error('DB Error in emailEsists:', error);
+        // assume email doesn't exist
+        return false
+    }
+};
+
+//Save a new user registration to the database
+// @param {string} name - User's full name
+// @param {string} email - User's email address
+// @param {string} password - User's plain text password to be hashed before adding to database
+// @param {Promise<Object|null>} The saved user without password or null if failed
+
+const saveUser = async (name, email, password) => {
+    try {
+        const hasedPass = await hashPassword(password);
+        const query = `
+            INSERT INTO users (name, email, password)
+            VALUES ($1, $2, $3)
+            RETURNING id, name, email, created_at, updated_at
+        `;
+
+        const result = await db.query(query, [name, email, hashedPass]);
+        return result.rows[0] || null;
+    } catch (error) {
+        console.error('DB Error in saveUser:', error);
+        return null;
+    }
+};
+
+// Retrieve all registered users without passwords
+// @returns {Promist<Array>} Array of user objects without passwords
+
+const getAllUsers = async () => {
+    try {
+        const query = `
+            SELECT id, name, email, created_at, updated_at
+            FROM users
+            ORDER BY created_at DESC
+        `;
+
+        const result = await db.query(query);
+        return result.rows;
+    }catch (error) {
+        console.error('DB Error in getAllUsers:', error);
+        return [];
+    }
+};
+
+// Retrieve a single user by ID with role information
+// @param {number} if - User ID to retrieve
+// @returns {Promise<Object|null>} User object with role or null if not found
+
+const getUserById = async (id) => {
+    try {
+        const query = `
+            SELECT
+                users.id,
+                users.name,
+                users.email,
+                users.created_at,
+                roles.role_name
+            FROM users
+            INNER JOIN roles ON users.role_id = roles.id
+            WHERE users.id = $1
+        `;
+
+        const result = await db.query(querym [id]);
+        return result.rows[0] || null;
+    } catch (error) {
+        console.error('DB Error in getUserById:', error);
+        return null;
+    }
+};
+
+// Update a user's name and email
+// @param {number} id - User ID to update
+// @param {string} name = New name
+//  @param {string} email - New email address
+// @returns {Promise<Obhect|null>} Updated user object or null if failed
+
+const updateUser = async (id, name, email) => {
+    try {
+        const query = `
+            UPDATE users
+            SET name = $1, email = $2, updated_at = CURRENT_TIMESTAMP
+            WHERE id = $3
+            RETURNING id, name, email, updated_at
+        `;
+
+        const result = await db.query(query, [name, email, id]);
+        return result.rows[0] || null;
+    } catch (error) {
+        console.error('DB Error in updateUser:', error);
+        return null;
+    } 
+};
+
+//Delete a user account
+// @param {number} id - User ID to delete
+// @returns {Promise<boolean>} True if deleted, false if failed
+
+const deleteUser = async (id) => {
+    try {
+        const query = 'DELETE FROM users WHERE id = $1';
+        const result = await db.query(query, [id]);
+        return result.rowCount > 0;
+    } catch (error) {
+        console.error('DB Error in deleteUser:', error);
+        return false;
+    }
+};
+
+export {hashPassword, emailExists, saveUser, getAllUsers, getUserById, updateUser, deleteUser };

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase Ready - <%= title %></title>
+    <link rel="stylesheet" href="/styles.css">
+    <% if (NODE_ENV.includes('dev')) { %>
+        <script>
+            // Get the current hostname and port from the browser
+            const host = window.location.hostname;
+            const currentPort = window.location.port;
+
+            // Calculate WebSocket port (current port + 1)
+            const wsPort = currentPort ? (parseInt(currentPort) + 1) : 3001;
+
+            // Create WebSocket connection using dynamic hostname and port
+            const ws = new WebSocket(`ws://${host}:${wsPort}`);
+            ws.onclose = () => {
+                setTimeout(() => location.reload(), 2000);
+            };
+        </script>
+    <% } %>
+</head>
+<body>
+    
+    <header>
+        <nav>
+            <a href="/" id="logo_text">
+                <h1>Phase Ready</h1>
+            </a>
+            <a href="/phases">Phases</a>
+            <a href="/resources">Resources</a>
+            <a href="/merch">Merch</a>
+            <a href="/menu">Menu</a>
+            <a href="/podcasts">Podcasts</a>
+        </nav>
+        <div class="auth-btns">
+            <a href="/signup"><button>Sign Up</button></a>
+            <a href="/login"><button>Login</button></a>
+        </div>
+      
+    </header>
+    <main>

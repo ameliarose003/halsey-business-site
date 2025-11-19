@@ -4,6 +4,7 @@ body {
     margin: 0;
     font-family: "Anaheim", sans-serif;
     background-color: #262334;
+    color: whitesmoke;
 }
 
 
@@ -14,14 +15,12 @@ header {
     /* background-color: rgb(27, 27, 101); */
     color: whitesmoke;
     display: grid;
-    grid-template-columns: auto 20%;
+    grid-template-columns: auto 30%;
 }
 
 header a {
     color: whitesmoke;
     text-decoration: none;
-    /* margin-left: 50px; */
-
 }
 
 header nav {
@@ -33,7 +32,7 @@ header nav {
 
 header nav a:hover {
     cursor: pointer;
-    color: rgb(168, 168, 233);
+    text-decoration: underline;
 }
 
 #logo_text {
@@ -47,27 +46,31 @@ header nav a:hover {
 }
 
 .auth-btns button {
-    margin: 10px;
+    margin: 10px 0;
     background-color: #262334;
     border-radius: 50%;
     padding: 5px;
     width: 90px;
-    border: 3px solid white;
+    border: 2px solid white;
     color: white;
-}
+    box-shadow: black 1px 3px 6px 0px;
 
-.auth-btns button:hover {
-    background-color: white;
-    color: #262334;
-    border: 3px solid #bb4032;
-    cursor: pointer;
+    &:hover {
+        background-color: white;
+        color: #262334;
+        border: 3px solid #bb4032;
+        cursor: pointer;
+
+    }
+
+
 }
 
 /* HOME PAGE */
 
 .intro-msg {
     text-align: center;
-    background-color: #201e27;
+    background-color: #000000;
     color: rgb(226, 226, 250);
     padding: 20px;
 }
@@ -89,7 +92,7 @@ header nav a:hover {
 }
 
 .home_videos div iframe {
-    background-color: rgb(63 47 120);
+    background-color: #ea412a;
     border: 2px solid #77131a;
     cursor: pointer;
 }
@@ -110,7 +113,13 @@ header nav a:hover {
     background-color: #b02f1e;
     border-radius: 12px;
     cursor: pointer;
-    border: 3px solid #bb4032;
+    border: 2px solid #bb4032;
+    box-shadow: #bb40328b 1px 1px 1px 1px;
+    
+    &:hover {
+        background-color: #bb4032;
+        border: 2px solid #b02f1e;
+    }
 }
 
 .home_takeMeTo_btns .takeMeTo_phases {
@@ -120,18 +129,22 @@ header nav a:hover {
 
 /* Footer */
 footer {
-    background-color: rgb(63 47 120);
     color: whitesmoke;
     display: flex;
     justify-content: space-between;
     padding-left: 10%;
     padding-right: 10%;
-    /* grid-template-columns: auto 20%; */
-}
-footer nav a img {
+    border-top: #000000a4 1px solid;
+
+    nav a {
+        text-decoration: none;
+    }
+
+    nav a img {
     width: 30px;
     margin: 10px;
     border-radius: 12px;
+}
 }
 
 /* Responsive Design */

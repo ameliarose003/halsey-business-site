@@ -1,10 +1,11 @@
 {
   "name": "halsey-business-website",
   "version": "1.0.0",
-  "description": "��#\u0000 \u0000h\u0000a\u0000l\u0000s\u0000e\u0000y\u0000-\u0000b\u0000u\u0000s\u0000i\u0000n\u0000e\u0000s\u0000s\u0000-\u0000s\u0000i\u0000t\u0000e\u0000\r\u0000 \u0000",
-  "main": "app.js",
+  "description": "Website for the Phase Ready business located in Plattsburg, MO",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon --env-file=.env server.js",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -13,13 +14,19 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/ameliarose003/halsey-business-site/issues"
   },
   "homepage": "https://github.com/ameliarose003/halsey-business-site#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "ejs": "^3.1.10",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "ws": "^8.18.3"
   }
 }
