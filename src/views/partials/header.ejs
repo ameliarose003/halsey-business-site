@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phase Ready - <%= title %></title>
-    <link rel="stylesheet" href="/styles.css">
+    <%- renderStyles() %>
+    <link rel="stylesheet" href="css/styles.css">
     <% if (NODE_ENV.includes('dev')) { %>
         <script>
             // Get the current hostname and port from the browser
@@ -21,6 +22,8 @@
             };
         </script>
     <% } %>
+    <%- renderScripts() %>
+    
 </head>
 <body>
     
@@ -36,9 +39,20 @@
             <a href="/podcasts">Podcasts</a>
         </nav>
         <div class="auth-btns">
-            <a href="/signup"><button>Sign Up</button></a>
+            <a href="/signup"><button>Create Account</button></a>
             <a href="/login"><button>Login</button></a>
         </div>
       
     </header>
     <main>
+            <% const messages = flash();%>
+            <% Object.keys(messages).forEach(type => { %>
+                <% const msgs = messages[type]; %>
+                <% if (msgs && Array.isArray(msgs) && msgs.length > 0) { %>
+                <div class="alert <%= type %>">
+                    <% msgs.forEach(msg => { %>
+                        <p><%= msg %></p>
+                    <% }); %>
+                </div>
+                <% } %>
+            <% }); %>

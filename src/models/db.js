@@ -2,7 +2,7 @@ import { Pool } from 'pg';
 
 const pool = new Pool({
     connectionString: process.env.DB_URL,
-    ssl: false
+    ssl: {rejectUnauthorized: false}
 });
 
 // create and export a reference to the pool object

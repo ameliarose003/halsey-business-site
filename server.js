@@ -1,9 +1,13 @@
 import express from 'express';
-import { fileURLToPath } from 'url';
 import path from 'path';
-import routes from './src/controllers/routes.js';
-import { globalMiddleware, flash } from './src/middleware/global.js';
+import { fileURLToPath } from 'url';
 import { setupDatabase, testConnection } from './src/models/setup.js';
+import session from 'express-session';
+import connectPgSimple from 'connect-pg-simple';
+// import MVC components
+import routes from './src/controllers/routes.js';
+import { globalMiddleware } from './src/middleware/global.js';
+import flash from './src/middleware/flash.js';
 
 // Sserver Configuration
 const __filename = fileURLToPath(import.meta.url);
@@ -14,10 +18,34 @@ const PORT = process.env.PORT || 3000;
 // Express setup of the server
 const app = express();
 
+// Initialize PostreSQL session store
+const pgSession = connectPgSimple(session);
+
+// Configure session middleware
+app.use(session({
+    store: new pgSession({
+        conString: process.env.DB_URL,
+        tableName: 'session',
+        createTableIfMissing: true
+    }),
+    secret: process.env.SESSION_SECRET || 'default',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: NODE_ENV.includes('dev') !== true,
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000
+    }
+}));
+
 // Configure Express
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
+
+// Allow express to receive and process common POST data
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
 // Global middleware
 app.use(flash);

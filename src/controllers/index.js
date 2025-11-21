@@ -1,6 +1,7 @@
 // Basic Routes
 
 const homePage = (req, res) => {
+    console.log(res.locals)
     res.render('home', {title: 'Home'})
 };
 

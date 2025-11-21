@@ -1,3 +1,33 @@
-<%- include('partials/header') %>
+<%- include('../../partials/header') %>
+<div class="intro-msg">
     <h1><%= title %></h1>
-    
+    <p>Join us to learn more about emergency preparedness, order merch, and order from our menu!</p>
+</div>
+
+<form method="post" action="/signup" class="registration-form">
+
+    <div class="form-group">
+        <label for="name">Username</label>
+        <input type="name" id="name" name="name" placeholder="Create your username" minlength="7" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" minlength="8" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+    </div>
+    <div class="form-group">
+        <label for="confirmEmail">Confirm Email</label>
+        <input type="email" id="confirmEmail" name="confirmEmail" placeholder="Please confirm your email" minlength="8" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+    </div>
+    <div class="form-group">
+        <label for="password">Password*</label>
+        <input type="password" id="password" name="password" placeholder="Create Your Password" minlength="8" required pattern="(?=.*[0-9])(?=.*[!@#$%^&*]).*">
+    </div>
+    <div class="form-group">
+        <label for="confirmPassword">Confirm Password*</label>
+        <input type="password" id="ConfirmPassword" name="ConfirmPassword" placeholder="Please Confirm Your Password" minlength="8" required pattern="(?=.*[0-9])(?=.*[!@#$%^&*]).*">
+    </div>
+    <p>Your password must be a minimum of 8 characters and include a number (0-9) and one or more of these characters !@#$%^&*</p>
+    <button type="submit">Submit Registration Form</button>
+</form>
+
+<%- include('../../partials/footer') %>

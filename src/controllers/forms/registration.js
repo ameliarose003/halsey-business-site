@@ -7,9 +7,9 @@ const addRegistrationSpecificStyles = (res) => {
 
 // Display registration form
 const showRegistrationForm = (req, res) => {
-    addRegistrationSpecificStyles(res);
+    addRegistrationSpecificStyles(res); 
     res.render('forms/registration/form', {
-        title: 'Sign Up'
+        title: 'Create Account'
     });
 };
 

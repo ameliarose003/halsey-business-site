@@ -1,0 +1,64 @@
+/* Login Form Styles */
+a {
+    color: #f8f8fb;
+}
+.login-form {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f8f8fb;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+    .form-group {
+        margin-bottom: 1.5rem;
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+            &:focus {
+                outline: none;
+                border-color: #2c5aa0;
+                box-shadow: 0 0 5px rgba(44, 90, 160, 0.3);
+            }
+        }
+    }
+
+    button {
+        background-color: #262334;
+        color: #f8f8fb;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s ease, box-shadow 0.2s ease;
+        display: block;
+        margin: 0 auto;
+
+        &:hover {
+            background-color: #353050;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        &:active {
+            transform: translateY(1px);
+        }
+    }
+}
