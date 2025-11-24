@@ -1,4 +1,5 @@
 import db from './db.js';
+import setupUsersDatabaseTables from './users-db-setup.js';
 
 /**
  * Creates a URL-friendly slug from one or more strings by converting to lowercase,
@@ -60,18 +61,18 @@ const setupDatabase = async() => {
     const verbose = process.env.ENABLE_SQL_LOGGING === 'true';
     try {
         if (await isAlreadyInitialized(verbose)) {
-            setupPracticeDatabase(verbose);
+            setupUsersDatabaseTables(verbose);
             if (verbose) console.log('DB already initialized - skipping setup.');
             return true;
         }
 
         if (verbose) console.log('Setting up database...');
 
-        // if (verbose) {
-        //     setupPracticeDatabase(verbose);
-        //     console.log('Database setup complete');
-        // }
-        // return true;
+        if (verbose) {
+            setupUsersDatabaseTables(verbose);
+            console.log('Database setup complete');
+        }
+        return true;
     } catch (error) {
         console.error('Error setting up database:', error.message);
         throw error;

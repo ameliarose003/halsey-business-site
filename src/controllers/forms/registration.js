@@ -40,6 +40,7 @@ const processRegistration = async (req, res) => {
         req.flash('success', 'Sign-up complete! You can now log in.');
         res.redirect('/login');
     } catch (error) {
+        console.log('There was an error processing the registration :(');
         req.flash('error', 'Error processing registration');
         return res.redirect('/signup');
     }
@@ -66,11 +67,14 @@ const showEditAccountForm = async (req, res) => {
         req.flash('error', 'User not found.')
         return res.redirect('/users');
     };
-
     const targetUser = await getUserById(targetUserId);
+    console.log('Full URL:', req.originalUrl);
+    console.log('req.params:', req.params);
+    console.log('req.params.id raw value:', req.params.id, typeof req.params.id);
+    console.log('After parseInt:', parseInt(req.params.id, 10));
     // Check if the target user (the user clicked on) exists
     if (!targetUser) {
-        req.flash('error', 'User not found')
+        req.flash('error', 'Target User not found')
         return res.redirect('/users');
     };
 
@@ -138,7 +142,7 @@ const processEditAccount = async (req, res) => {
     }
 
     req.flash('success', 'Account updated successfully.');
-    return res.redirect('/users');
+    return res.redirect(`/users/${req.params.id}/edit`);
 };
 
 // Delete a user account (admin only)

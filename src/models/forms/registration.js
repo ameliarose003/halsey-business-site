@@ -42,7 +42,7 @@ const emailExists = async (email) => {
 
 const saveUser = async (name, email, password) => {
     try {
-        const hasedPass = await hashPassword(password);
+        const hashedPass = await hashPassword(password);
         const query = `
             INSERT INTO users (name, email, password)
             VALUES ($1, $2, $3)
@@ -94,7 +94,7 @@ const getUserById = async (id) => {
             WHERE users.id = $1
         `;
 
-        const result = await db.query(querym [id]);
+        const result = await db.query(query, [id]);
         return result.rows[0] || null;
     } catch (error) {
         console.error('DB Error in getUserById:', error);

@@ -52,4 +52,16 @@ const loginValidation = [
         .withMessage('Password is required')
 ];
 
-export { registrationValidation, loginValidation};
+const updateAccountValidation = [
+    body('name')
+        .trim()
+        .isLength({min: 7})
+        .withMessage('Name must be at least 7 characters long'),
+    body('email')
+        .trim()
+        .isEmail()
+        .withMessage('Please provide a valid email address')
+        .normalizeEmail()
+];
+
+export { registrationValidation, loginValidation, updateAccountValidation};

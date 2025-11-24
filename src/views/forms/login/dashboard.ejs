@@ -1,0 +1,32 @@
+<%- include('../../partials/header') %>
+<div class="intro-msg">
+    <h1><%= title %></h1>
+    <p>View and Edit your account here!</p>
+</div>
+<div class="user-info">
+    <% if (user) { %>
+        <div class="user-detail">
+            <p class="label">Username:</p>
+            <p class="value"><%= user.name %></p>
+            <p class="label">Email:</p>
+            <p class="value"><%= user.email %></p>
+            <p class="label">Account created on:</p>
+            <p class="value"><% const createdAt = new Date(user.created_at); %> <%= createdAt.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'}) %></p>
+            <p><a href="/users/<%= user.id %>/edit">Edit Account</a></p>
+        </div>
+        <% if (locals.isLoggedIn) { %>
+            <%
+                const isAdmin = locals.currentUser.role_name === 'admin';
+            %>
+            <% if (isAdmin) { %>
+                <a href="/users">View and edit all users</a>
+            <% } %>
+        <% } %>
+    <% } %>
+</div>
+<div class="dashboard-actions">
+    <a href="/logout" class="logout-button">Logout</a>
+</div>
+
+
+<%- include('../../partials/footer')%>

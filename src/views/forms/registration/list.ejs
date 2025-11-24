@@ -1,0 +1,45 @@
+<%- include('../../partials/header') %>
+<div class="intro-msg">
+    <h1><%= title %></h1>
+    <p>View and Edit All User account here!</p>
+</div>
+
+<% if (allRegisteredUsers && allRegisteredUsers.length > 0) { %>
+    <div class="users-list">
+        <% allRegisteredUsers.forEach((user) => { %>
+            <div class="user-card">
+                <h3><%=user.name %></h3>
+                <p><%= user.email %></p>
+
+                <% if (locals.isLoggedIn) { %>
+                    <%
+                        const isOwnCard = locals.currentUser.id === user.id;
+                        const isAdmin = locals.currentUser.role_name === 'admin';
+                        const canEdit = isOwnCard || isAdmin;
+                        const canDelete = isAdmin && !isOwnCard;
+                    %>
+                    <div class="actions">
+                        <% if (canEdit) { %>
+                            <a href="/users/<%=user.id%>/edit">Edit</a>
+                        <% } %>
+
+                        <% if (canDelete) { %>
+                            <form action="/users/<%= user.id %>/delete" method="post">
+                                <button type="submit" onclick="return confirm('Delete this user?')">
+                                    Delete
+                                </button>
+                            </form>
+                        <% } %>
+                    </div>
+                <% } %>
+            </div>
+        <% }); %>
+        <% } else { %>
+            <p class="no-users">No registered users yet.</p>
+            <% } %>
+        </div>
+        <div class="dashboard-actions">
+            <a href="/logout" class="logout-button">Logout</a>
+        </div>
+
+<%- include('../../partials/footer')%>

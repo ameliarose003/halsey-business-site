@@ -24,7 +24,7 @@ if (process.env.NODE_ENV.includes('dev') && process.env.ENABLE_SQL_LOGGING === '
                 return res;
             } catch (error) {
                 console.error('Error in query:', {
-                    text: text.replace(/\s+/g, ' ').trim(),
+                    text: text.replace(/\s+/g, ' ').trim(), 
                     error: error.message
                 });
                 throw error;

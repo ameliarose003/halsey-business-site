@@ -15,36 +15,41 @@ const showLoginForm = (req, res) => {
 const processLogin = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        req.flash('error');
+        req.flash('error', 'Please fill out all fields');
         return res.redirect('/login');
     }
 
     const { email, password } = req.body;
+    console.log(email);
     const user = await findUserByEmail(email.toLowerCase());
+    console.log(user);
     if (!user) {
-        req.flash('error', 'Invalid email or password');
+        console.log("invalid email:", user);
+        req.flash('error', 'Invalid email');
         return res.redirect('/login');
     }
 
     const validPass = await verifyPassword(password, user.password);
-    if(!validPass) {
-        req.flash('error', 'Invalid email or password');
+    if (!validPass) {
+        req.flash('error', 'Invalid password');
         return res.redirect('/login');
     }
 
     user.password = null;
     delete user.password;
     req.session.user = user;
-
-    req.flash('success', 'Welcome to your dashboard');
-    return res.redirect('/dashboard');
+    setTimeout( () => {
+        req.flash('success', 'Welcome to your dashboard');
+        res.redirect('/dashboard');
+    }, 100);
+  
 };
 
 //Handle user logout
 //NOTE: connect.sid is the default session name since we did not name the session
 //when created it in our server.js file.
 const processLogout = (req, res) => {
-    if (!req.sessoin) {
+    if (!req.session) {
         return res.redirect('/');
     }
 
