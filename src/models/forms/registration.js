@@ -44,12 +44,12 @@ const saveUser = async (name, email, password) => {
     try {
         const hashedPass = await hashPassword(password);
         const query = `
-            INSERT INTO users (name, email, password)
-            VALUES ($1, $2, $3)
+            INSERT INTO users (name, email, password, role_id)
+            VALUES ($1, $2, $3, $4)
             RETURNING id, name, email, created_at, updated_at
         `;
 
-        const result = await db.query(query, [name, email, hashedPass]);
+        const result = await db.query(query, [name, email, hashedPass, 1]);
         return result.rows[0] || null;
     } catch (error) {
         console.error('DB Error in saveUser:', error);

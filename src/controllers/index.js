@@ -23,6 +23,7 @@ const menuPage = (req, res) => {
 
 const podcastsPage = (req, res) => {
     res.render('podcasts', {
+        title: "Emergency Preparedness Podcasts",
         videos: [
             {title: "Emergency Kit Basics", url: "https://www.youtube.com/watch?v=BKo_BJwe3MM"},
             {title: "Evacuation Planning", url: "https://www.youtube.com/embed/4ApKN6JMRFE?si=A_hkKFLidz5nqtcr"}

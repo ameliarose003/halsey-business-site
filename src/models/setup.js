@@ -1,6 +1,18 @@
 import db from './db.js';
 import setupUsersDatabaseTables from './users-db-setup.js';
 
+const createPodcastTableIfNotExists = `
+    CREATE TABLE IF NOT EXISTS podcasts (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(100) NOT NULL,
+        description VARCHAR(250) NOT NULL,
+        url VARCHAR(100) NOT NULL,
+        slug VARCHAR(100) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+`;
+
 /**
  * Creates a URL-friendly slug from one or more strings by converting to lowercase,
  * replacing spaces with hyphens, and removing special characters.
@@ -25,8 +37,17 @@ const createSlug = (...strings) => {
         .replace(/^-|-$/g, '');
 };
 
+const insertPodcast = async(podcast, verbose = true) => {
+    const slug = createSlug(podcast.title);
+
+    const query = `
+        INSERT INTO podcasts (id, title, description, video)
+        VALUES ($1, $2, $3, $4, $5)
+    `
+};
+
 const allTablesExist = async() => {
-    const tables = [];
+    const tables = ['podcasts'];
     const res = await db.query(
         `
         SELECT table_name
@@ -35,7 +56,7 @@ const allTablesExist = async() => {
         `,
         [tables]
     );
-    return res.rowCOunt === tables.length;
+    return res.rowCount === tables.length;
 };
 
 const lastSeedRowsExist = async() => {
@@ -68,6 +89,8 @@ const setupDatabase = async() => {
 
         if (verbose) console.log('Setting up database...');
 
+        await db.query(createPodcastTableIfNotExists);
+
         if (verbose) {
             setupUsersDatabaseTables(verbose);
             console.log('Database setup complete');
@@ -81,14 +104,14 @@ const setupDatabase = async() => {
 
 // test database connection
 const testConnection = async() => {
-    // try {
-    //     const result = await db.query('SELECT NOW() as current_time')
-    //     console.log('Database connection successful:', ReadableStreamDefaultReader.rows[0].current_time);
-    //     return true;
-    // } catch (error) {
-    //     console.error('Database connection failed:', error.message);
-    //     throw error;
-    // }
+    try {
+        const result = await db.query('SELECT NOW() as current_time')
+        console.log('Database connection successful:', result.rows[0].current_time);
+        return true;
+    } catch (error) {
+        console.error('Database connection failed:', error.message);
+        throw error;
+    }
 };
 
 export { setupDatabase, testConnection };

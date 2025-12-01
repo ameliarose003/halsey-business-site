@@ -24,6 +24,7 @@ router.get('/resources', resourcesPage);
 router.get('/merch', merchPage);
 router.get('/menu', menuPage);
 router.get('/podcasts', podcastsPage);
+// podcast/:id/:slug slug wouldn't be needed, but is good for user experience or podcast/:timestamp/:slug ex. podcast/2025-nov/slug
 router.get('/test-error', testErrorPage);
 
 // Registration Routes

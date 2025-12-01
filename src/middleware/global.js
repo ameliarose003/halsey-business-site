@@ -11,6 +11,15 @@ const setLocalVariables = (req, res) => {
     // Makes req.query available to all templates
     res.locals.queryParams = { ...req.query };
 
+    const user = req.session.user;
+
+    if (req.session && req.session.user) {
+        res.locals.isLoggedIn = true;
+        res.locals.currentUser = {
+            id: user.id,
+            role_name: user.role_name
+        };
+    };
 };
 
 const setHeadAssetsFunctionality = (res) => {
