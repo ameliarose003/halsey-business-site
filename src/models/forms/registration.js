@@ -102,22 +102,56 @@ const getUserById = async (id) => {
     }
 };
 
+// const getUserByRole = async (roleId) => {
+//     try {
+
+//         const query = `
+//         SELECT user.role_id
+//         FROM users
+//         WHERE users.id = $1
+//         `;
+        
+//         const result = await db.query(query);
+//         return result.rows;
+//     } catch (error) {
+//         console.error('DB Error in getUserByRole:', error);
+//         return null;
+//     }
+// }
+
 // Update a user's name and email
 // @param {number} id - User ID to update
 // @param {string} name = New name
 //  @param {string} email - New email address
 // @returns {Promise<Obhect|null>} Updated user object or null if failed
 
-const updateUser = async (id, name, email) => {
+const updateUser = async (id, name, email, role_name) => {
     try {
+        let roleId = null;
+        if (role_name) {
+            const roleResult = await db.query('SELECT id FROM roles WHERE role_name = $1', [role_name]);
+            if (roleResult.rows.length === 0) {
+                console.error('Invalid role_name:', role_name);
+                return null;
+            }
+            roleId = roleResult.rows[0].id;
+        }
+
         const query = `
             UPDATE users
-            SET name = $1, email = $2, updated_at = CURRENT_TIMESTAMP
-            WHERE id = $3
-            RETURNING id, name, email, updated_at
+            SET name = $1,
+            email = $2, 
+            ${roleId !== null ? 'role_id = $3' : ''},
+            updated_at = CURRENT_TIMESTAMP
+            WHERE id = $${roleId !== null ? 4 : 3}
+            RETURNING id, name, email, role_id, updated_at
         `;
 
-        const result = await db.query(query, [name, email, id]);
+        // const params = roleId !== null
+        //     ? [name, email, roleId, id]
+        //     : [name, email, id];
+
+        const result = await db.query(query, [name, email, roleId, id]);
         return result.rows[0] || null;
     } catch (error) {
         console.error('DB Error in updateUser:', error);

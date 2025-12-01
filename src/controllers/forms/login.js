@@ -47,7 +47,7 @@ const processLogin = async (req, res) => {
 
 //Handle user logout
 //NOTE: connect.sid is the default session name since we did not name the session
-//when created it in our server.js file.
+//when we created it in our server.js file.
 const processLogout = (req, res) => {
     if (!req.session) {
         return res.redirect('/');

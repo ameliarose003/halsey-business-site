@@ -53,7 +53,7 @@ const showAllUsers = async (req, res) => {
     addRegistrationSpecificStyles(res);
     res.render('forms/registration/list', {
         title: 'Registered Users',
-        allRegisteredUsers: allRegisteredUsers
+        allRegisteredUsers: allRegisteredUsers,
     });
 };
 
@@ -63,15 +63,11 @@ const showEditAccountForm = async (req, res) => {
     const targetUserId = parseInt(req.params.id);
     const currentUser = req.session.user;
     // Check if the current user exists
-    if(!currentUser) {
+    if (!currentUser) {
         req.flash('error', 'User not found.')
         return res.redirect('/users');
     };
     const targetUser = await getUserById(targetUserId);
-    console.log('Full URL:', req.originalUrl);
-    console.log('req.params:', req.params);
-    console.log('req.params.id raw value:', req.params.id, typeof req.params.id);
-    console.log('After parseInt:', parseInt(req.params.id, 10));
     // Check if the target user (the user clicked on) exists
     if (!targetUser) {
         req.flash('error', 'Target User not found')
@@ -104,7 +100,7 @@ const processEditAccount = async (req, res) => {
 
     const targetUserId = parseInt(req.params.id);
     const currentUser = req.session.user;
-    const { name, email } = req.body;
+    const { name, email, role_name } = req.body;
     const targetUser = await getUserById(targetUserId);
     if (!targetUser) {
         req.flash('error', 'User not found')
@@ -119,16 +115,23 @@ const processEditAccount = async (req, res) => {
     }
 
     // Check if new email already exists for a different user
-    if (await emailExists(email)) {
-        console.log(email, targetUser.email)
+    if (await emailExists(email) && email !== targetUser.email) {
         req.flash('error', 'Email not available')
         return res.redirect(`/users/${req.params.id}/edit`);
     }
 
     // Update user in database using updateUser
-    const updatedUser = await updateUser(targetUserId, name, email);
+    const currentRole = targetUser.role_name || 'user';
+    const finalRole = role_name && role_name.trim() ? role_name.trim() : currentRole;
+
+    if (finalRole !== 'admin' && isAdmin) {
+        req.flash('warning', "Careful not to make all admins plain users!!!");
+        // return res.redirect(`/users/${req.params.id}/edit`);
+    }
+
+    const updatedUser = await updateUser(targetUserId, name, email, finalRole);
     if (!updatedUser) {
-        req.flash('error', 'Update failed');;
+        req.flash('error', 'Update failed');
         return res.redirect(`/users/${req.params.id}/edit`);
     }
 
@@ -137,7 +140,8 @@ const processEditAccount = async (req, res) => {
         req.session.user = {
             ...req.session.user,
             name: updatedUser.name,
-            email: updatedUser.email
+            email: updatedUser.email,
+            role: updatedUser.role_name
         }
     }
 

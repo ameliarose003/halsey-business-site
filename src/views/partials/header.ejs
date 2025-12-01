@@ -39,8 +39,13 @@
             <a href="/podcasts">Podcasts</a>
         </nav>
         <div class="auth-btns">
-            <a href="/signup"><button>Create Account</button></a>
-            <a href="/login"><button>Login</button></a>
+            <% if (locals.isLoggedIn) { %>
+                <a href="/dashboard"><button>Dashboard</button></a>
+                <a href="/logout"><button>Logout</button></a>
+            <% } else { %>
+                <a href="/signup"><button>Create Account</button></a>
+                <a href="/login"><button>Login</button></a>
+            <% } %>
         </div>
       
     </header>

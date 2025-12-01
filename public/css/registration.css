@@ -1,6 +1,6 @@
 .registration-form {
     max-width: 600px;
-    margin: 2rem auto;
+    margin: 4rem auto;
     padding: 2rem;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -79,4 +79,12 @@
             cursor: not-allowed;
         }
     }
+}
+
+.dropdown-content {
+    display: none;
+}
+
+.dropdown.active .dropdown-content {
+    display: block;
 }

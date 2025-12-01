@@ -14,7 +14,22 @@
         <input type="email" id="email" name="email" value="<%= user.email %>" required>
     </div>
     <div>
-        <button type="submit">Update Account</button>
+        <label for="roleInput">Role:</label>
+        <input type="hidden" name="role_name" value="<%= user.role_name %>" id="roleInput">
+        <% if (locals.isLoggedIn && locals.currentUser.role_name === 'admin') { %>
+            <div class="dropdown">
+                <button type="button" class="dropbtn" id="roleDisplay"><%= user.role_name %> ▼</button>
+                <div class="dropdown-content">
+                    <a href="#" data-role="admin">Admin</a>
+                    <a href="#" data-role="user">User</a>
+                </div>
+            </div>
+        <% } else { %>
+            <span><%= user.role_name %></span>
+        <% } %>
+    </div>
+    <div>
+        <button type="submit" onclick="return confirm('Update this user?')">Update Account</button>
         <a href="/users">Cancel</a>
     </div>
 </form>

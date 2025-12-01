@@ -61,7 +61,12 @@ const updateAccountValidation = [
         .trim()
         .isEmail()
         .withMessage('Please provide a valid email address')
-        .normalizeEmail()
+        .normalizeEmail(),
+    body('role_name')
+        .optional({checkFalsy: true})
+        .trim()
+        .isIn(['admin', 'user'])
+        .withMessage('Please select valid role title, admin or user')
 ];
 
 export { registrationValidation, loginValidation, updateAccountValidation};
