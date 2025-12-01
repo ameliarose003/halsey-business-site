@@ -8,8 +8,10 @@
     <div class="users-list">
         <% allRegisteredUsers.forEach((user) => { %>
             <div class="user-card">
-                <h3><%=user.name %></h3>
-                <p><%= user.email %></p>
+                <div class="user-info">
+                    <h3>User: <%=user.name %></h3>
+                    <p>Email: <%= user.email %></p>
+                </div>
 
                 <% if (locals.isLoggedIn) { %>
                     <%
@@ -20,12 +22,12 @@
                     %>
                     <div class="actions">
                         <% if (canEdit) { %>
-                            <a href="/users/<%=user.id%>/edit">Edit</a>
+                            <a class="edit-btn" href="/users/<%=user.id%>/edit">Edit</a>
                         <% } %>
 
                         <% if (canDelete) { %>
-                            <form action="/users/<%= user.id %>/delete" method="post">
-                                <button type="submit" onclick="return confirm('Delete this user?')">
+                            <form class="delete-form" action="/users/<%= user.id %>/delete" method="post">
+                                <button class="delete-btn" type="submit" onclick="return confirm('Delete this user?')">
                                     Delete
                                 </button>
                             </form>

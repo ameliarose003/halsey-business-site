@@ -77,4 +77,44 @@ a {
     p, a {
         color: black;
     }
+
+    .value {
+        border-bottom: 1px solid #353050;
+    }
+
+    a {
+        display: inline-block;
+        margin-right: 10px;
+        text-decoration: none;
+        padding: 0rem 2.4rem;
+        background-color: #353050;
+        color: #e8e8f3;
+        border: 1px solid #262334;
+        border-radius: 6px;
+        cursor: pointer;
+
+        &:hover {
+            color: #353050;
+            background-color: #e8e8f3;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    }
+}
+
+.logout-button {
+    display: inline-block;
+    margin-right: 10px;
+    text-decoration: none;
+    padding: 0rem 2.4rem;
+    background-color: #353050;
+    color: #e8e8f3;
+    border: 1px solid #262334;
+    border-radius: 6px;
+    cursor: pointer;
+
+    &:hover {
+        color: #353050;
+        background-color: #e8e8f3;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 }

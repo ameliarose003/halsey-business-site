@@ -4,16 +4,16 @@
     <p>Edit account information here.</p>
 </div>
 
-<form action="/users/<%= user.id %>/update" method="post">
-    <div>
+<form class="edit-form" action="/users/<%= user.id %>/update" method="post">
+    <div class="form-group">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" value="<%= user.name %>" required>
     </div>
-    <div>
+    <div class="form-group">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" value="<%= user.email %>" required>
     </div>
-    <div>
+    <div class="form-group">
         <label for="roleInput">Role:</label>
         <input type="hidden" name="role_name" value="<%= user.role_name %>" id="roleInput">
         <% if (locals.isLoggedIn && locals.currentUser.role_name === 'admin') { %>
@@ -29,10 +29,12 @@
         <% } %>
     </div>
     <div>
-        <button type="submit" onclick="return confirm('Update this user?')">Update Account</button>
+        <button class="update-account" type="submit" onclick="return confirm('Update this user?')">Update Account</button>
+    </div>
+    <div class="go-back-btns">
         <a href="/users">Cancel</a>
+        <a href="/dashboard">Return to Dashboard</a>
     </div>
 </form>
-<a href="/dashboard">Return to Dashboard</a>
 
 <%- include('../../partials/footer') %>

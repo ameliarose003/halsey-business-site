@@ -6,11 +6,11 @@
 <div class="user-info">
     <% if (user) { %>
         <div class="user-detail">
-            <p class="label">Username:</p>
+            <p class="label"><strong>Username:</strong></p>
             <p class="value"><%= user.name %></p>
-            <p class="label">Email:</p>
+            <p class="label"><strong>Email:</strong></p>
             <p class="value"><%= user.email %></p>
-            <p class="label">Account created on:</p>
+            <p class="label"><strong>Account created on:</strong></p>
             <p class="value"><% const createdAt = new Date(user.created_at); %> <%= createdAt.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'}) %></p>
             <p><a href="/users/<%= user.id %>/edit">Edit Account</a></p>
         </div>
