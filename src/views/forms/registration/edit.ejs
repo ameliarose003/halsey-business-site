@@ -16,7 +16,7 @@
     <div class="form-group">
         <label for="roleInput">Role:</label>
         <input type="hidden" name="role_name" value="<%= user.role_name %>" id="roleInput">
-        <% if (locals.isLoggedIn && locals.currentUser.role_name === 'admin') { %>
+        <% if (locals.isLoggedIn && locals.currentUser.role_name === 'admin' && user.id !== locals.currentUser.id) { %>
             <div class="dropdown">
                 <button type="button" class="dropbtn" id="roleDisplay"><%= user.role_name %> ▼</button>
                 <div class="dropdown-content">

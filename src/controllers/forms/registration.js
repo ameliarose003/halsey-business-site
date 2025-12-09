@@ -129,6 +129,10 @@ const processEditAccount = async (req, res) => {
         // return res.redirect(`/users/${req.params.id}/edit`);
     }
 
+    // if (finalRole !== 'admin' && isAdmin) {
+    //     req.flash('error', "You cannot make yourself")
+    // }
+
     const updatedUser = await updateUser(targetUserId, name, email, finalRole);
     if (!updatedUser) {
         req.flash('error', 'Update failed');
