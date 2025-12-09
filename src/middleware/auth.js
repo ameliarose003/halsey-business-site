@@ -9,8 +9,17 @@ const requireLogin = (req, res, next) => {
         };
         return next();
     } else {
+        if (req.session) {
+        res.clearCookie('connect.sid');
+        req.session.destroy((err) => {
+            if (err) {
+                return console.log(err)
+            }
+            })
+        } 
         return res.redirect('/login');
     }
+    
 };
 
 // @params {string} roleName - The role name required (e.g. 'admin', 'user')
