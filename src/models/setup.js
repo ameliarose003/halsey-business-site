@@ -6,7 +6,7 @@ const createPodcastTableIfNotExists = `
         id SERIAL PRIMARY KEY,
         title VARCHAR(100) NOT NULL,
         description VARCHAR(250) NOT NULL,
-        url VARCHAR(100) NOT NULL,
+        url VARCHAR(150) NOT NULL,
         slug VARCHAR(100) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -37,14 +37,14 @@ const createSlug = (...strings) => {
         .replace(/^-|-$/g, '');
 };
 
-const insertPodcast = async(podcast, verbose = true) => {
-    const slug = createSlug(podcast.title);
+// const insertPodcast = async(podcast, verbose = true) => {
+//     const slug = createSlug(podcast.title);
 
-    const query = `
-        INSERT INTO podcasts (id, title, description, video)
-        VALUES ($1, $2, $3, $4, $5)
-    `
-};
+//     const query = `
+//         INSERT INTO podcasts (id, title, description, video)
+//         VALUES ($1, $2, $3, $4, $5)
+//     `
+// };
 
 const allTablesExist = async() => {
     const tables = ['podcasts'];
@@ -114,4 +114,4 @@ const testConnection = async() => {
     }
 };
 
-export { setupDatabase, testConnection };
+export { createSlug, setupDatabase, testConnection };

@@ -1,0 +1,49 @@
+<%- include('../partials/header') %>
+<div class="intro-msg">
+    <h1><%= title %></h1>
+    <% if (locals.isLoggedIn) { %>
+        <p>Enjoy learning about emergency preparedness here!</p>
+    <% } else { %>
+        <p><a href="/login">Login here</a> to begin saving your favorite podcasts.</p>
+    <% } %>
+</div>
+
+<% if (allUploadedPodcasts && allUploadedPodcasts.length > 0) { %>
+    <div class="podcast-list">
+        <% allUploadedPodcasts.forEach((podcast) => { %>
+            <div class="podcast-card">
+                <div class="podcast-info">
+                    <h3>Episode: <%= podcast.title %></h3>
+                    <iframe width="560" height="315" src="<%= podcast.url %>" title="<%= podcast.title %>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <p>Episode Description: <%= podcast.description %></p>                    
+                </div>
+
+                <% if (locals.isLoggedIn && locals.currentUser.role_name === 'admin') { %>
+                    <div class="actions">
+                        <a href="/podcasts/<%=podcast.id%>/edit" class="edit-btn">Edit</a>
+                        <form action="/podcasts/<%= podcast.id %>/delete" method="post" class="delete-form">
+                            <button class="delete-btn" type="submit" onclick="return confirm('Delete podcast episode?')">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                    <% } %>
+                </div>
+                <% }) %>
+            <% } else { %>
+                <p class="no-podcasts">No podcasts yet.</p>
+                <% if (locals.isLoggedIn && locals.currentUser.role_name === 'admin') { %>
+                    <p><a href="/podcasts/upload-video">Click here</a> to upload podcasts</p>
+                <% } %>
+                <% } %>
+                
+    </div>
+    <div class="return-to-home">
+        <a href="/">Return to the home page</a>
+    </div>
+
+
+
+
+<%- include('../partials/footer') %>
+

@@ -28,9 +28,9 @@ const emailExists = async (email) => {
         const emailCount = parseInt(result.rows[0].count);
         return emailCount > 0;
     } catch (error) {
-        console.error('DB Error in emailEsists:', error);
+        console.error('DB Error in emailExists:', error);
         // assume email doesn't exist
-        return false
+        return false;
     }
 };
 

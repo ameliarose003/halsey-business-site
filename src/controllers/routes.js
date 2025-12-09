@@ -16,15 +16,14 @@ import { showLoginForm,
 } from './forms/login.js';
 import { loginValidation, registrationValidation, updateAccountValidation } from '../middleware/validation/forms.js';
 import { requireLogin, requireRole } from '../middleware/auth.js';
-import { updateUser } from '../models/forms/registration.js';
+import {showPodcastForm, processPodcast, showAllPodcasts, showEditPodcastForm, processEditPodcast, processDeletePodcast} from './podcasts/podcasts.js'
+import {podcastValidation} from '../middleware/validation/podcasts.js'
 
 router.get('/', homePage);
 router.get('/phases', phasesPage);
 router.get('/resources', resourcesPage);
 router.get('/merch', merchPage);
 router.get('/menu', menuPage);
-router.get('/podcasts', podcastsPage);
-// podcast/:id/:slug slug wouldn't be needed, but is good for user experience or podcast/:timestamp/:slug ex. podcast/2025-nov/slug
 router.get('/test-error', testErrorPage);
 
 // Registration Routes
@@ -44,5 +43,14 @@ router.post('/users/:id/update', requireLogin, updateAccountValidation, processE
 // Has require login so other viewers can't see any user info.
 router.get('/users', requireLogin, requireRole('admin'), showAllUsers);
 router.post('/users/:id/delete', requireLogin, requireRole('admin'), processDeleteAccount);
+
+// podcast/:id/:slug slug wouldn't be needed, but is good for user experience or podcast/:timestamp/:slug ex. podcast/2025-nov/slug
+router.get('/podcasts', showAllPodcasts);
+router.get('/podcasts/upload-video', requireLogin, requireRole('admin'), showPodcastForm);
+router.post('/podcasts/upload-video', requireLogin, requireRole('admin'), processPodcast, podcastValidation);
+router.get('/podcasts/:id/edit', requireLogin, requireRole('admin'), showEditPodcastForm);
+router.post('/podcasts/:id/update', requireLogin, requireRole('admin'), podcastValidation, processEditPodcast) ;
+router.post('/podcasts/:id/delete', requireLogin, requireRole('admin'), processDeletePodcast);
+
 
 export default router;

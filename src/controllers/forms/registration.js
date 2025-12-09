@@ -152,7 +152,7 @@ const processEditAccount = async (req, res) => {
 // Delete a user account (admin only)
 const processDeleteAccount = async (req, res) => {
     const targetUserId = parseInt(req.params.id);
-    const currentUser = req.session.uer;
+    const currentUser = req.session.user;
     if (!currentUser) {
         req.flash('error', 'Not logged in');
         return res.redirect('/login');
