@@ -148,7 +148,7 @@ const processDeletePodcast = async (req, res) => {
     };
 
     req.flash('success', 'Podcast deleted successfully.');
-    return res.redirect('/podcasts/list');
+    return res.redirect('/podcasts');
 
 };
 
