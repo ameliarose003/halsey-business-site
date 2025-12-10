@@ -63,9 +63,9 @@ const showEditPodcastForm = async (req, res) => {
         req.flash('error', 'User not found.');
         return res.redirect('/login');
     };
-    console.log("targetPodcastId:", targetPodcastId);
+    // console.log("targetPodcastId:", targetPodcastId);
     const targetPodcast = await getPodcastById(targetPodcastId);
-    console.log("targetPodcast:", targetPodcast);
+    // console.log("targetPodcast:", targetPodcast);
     if (!targetPodcast) {
         req.flash('error', 'Podcast not found.');
         return res.redirect('/podcasts');
@@ -92,6 +92,7 @@ const processEditPodcast = async (req, res) => {
         req.flash('error', 'Please correct the errors in the form.');
         return res.redirect(`/podcasts/${targetPodcastId}/edit`);
     }
+    console.log('Errors', errors);
 
     const currentUser = req.session.user;
     const { title, description, url } = req.body;
@@ -100,6 +101,7 @@ const processEditPodcast = async (req, res) => {
         req.flash('error', 'Podcast not found.');
         return res.redirect('/podcasts');
     };
+    console.log('targetPodcast', targetPodcast);
 
     // Check permissions
     const isAdmin = currentUser.role_name === 'admin';
@@ -107,12 +109,15 @@ const processEditPodcast = async (req, res) => {
         req.flash('error', "You don't have permission to access this page");
         return res.redirect('/podcasts');
     };
+    
 
     // Check if title already exists
     if (await titleExists(title) && title !== targetPodcast.title) {
         req.flash('error', 'Title not available');
         return res.redirect(`/podcasts/${targetPodcastId}/edit`);
     };
+    console.log('title', titleExists(title));
+
 
     // udpate podcast in database using 
     const updatedPodcast = await updatePodcast(targetPodcastId, title, description, url);
@@ -120,8 +125,11 @@ const processEditPodcast = async (req, res) => {
         req.flash('error', 'Update failed');
         return res.redirect(`/podcasts/${targetPodcastId}/edit`);
     };
-
+    console.log('updated Podcast', updatedPodcast);
+    
+    
     req.flash('success', 'Podcast updated successfully.');
+    console.log('updated successfully', targetPodcast);
     return res.redirect(`/podcasts/${targetPodcastId}/edit`);
 };
 
@@ -144,7 +152,7 @@ const processDeletePodcast = async (req, res) => {
     const deletedPodcast = await deletePodcast(targetPodcastId);
     if (!deletedPodcast) {
         req.flash('error', 'Podcast deletion failed');
-        return res.redirect('/podcasts/list');
+        return res.redirect('/podcasts');
     };
 
     req.flash('success', 'Podcast deleted successfully.');
