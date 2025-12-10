@@ -78,50 +78,51 @@ const showEditPodcastForm = async (req, res) => {
     };
 
     addPodcastSpecificStyles(res);
-    res.render(`/podcasts/${req.params.id}/edit`, {
+    res.render('podcasts/edit', {
         title: 'Edit Podcast',
         podcast: targetPodcast
     });
 };
 
 const processEditPodcast = async (req, res) => {
+    const targetPodcastId = parseInt(req.params.id);
+    
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         req.flash('error', 'Please correct the errors in the form.');
-        return res.redirect(`/podcasts/${req.params.id}/edit`);
+        return res.redirect(`/podcasts/${targetPodcastId}/edit`);
     }
 
-    const targetPodcastId = parseInt(req.params.id);
     const currentUser = req.session.user;
     const { title, description, url } = req.body;
     const targetPodcast = await getPodcastById(targetPodcastId);
     if (!targetPodcast) {
         req.flash('error', 'Podcast not found.');
-        return res.redirect('/podcasts/list');
+        return res.redirect('/podcasts');
     };
 
     // Check permissions
     const isAdmin = currentUser.role_name === 'admin';
     if (!isAdmin) {
         req.flash('error', "You don't have permission to access this page");
-        return res.redirect('/podcasts/list');
+        return res.redirect('/podcasts');
     };
 
     // Check if title already exists
     if (await titleExists(title) && title !== targetPodcast.title) {
         req.flash('error', 'Title not available');
-        return res.redirect(`/podcasts/${req.params.id}/edit`);
+        return res.redirect(`/podcasts/${targetPodcastId}/edit`);
     };
 
     // udpate podcast in database using 
     const updatedPodcast = await updatePodcast(targetPodcastId, title, description, url);
     if (!updatedPodcast) {
         req.flash('error', 'Update failed');
-        return res.redirect(`/podcasts/${req.params.id}/edit`);
+        return res.redirect(`/podcasts/${targetPodcastId}/edit`);
     };
 
     req.flash('success', 'Podcast updated successfully.');
-    return res.redirect(`/podcasts/${req.params.id}/edit`);
+    return res.redirect(`/podcasts/${targetPodcastId}/edit`);
 };
 
 const processDeletePodcast = async (req, res) => {

@@ -124,11 +124,6 @@ const processEditAccount = async (req, res) => {
     const currentRole = targetUser.role_name || 'user';
     const finalRole = role_name && role_name.trim() ? role_name.trim() : currentRole;
 
-    if (finalRole !== 'admin' && isAdmin) {
-        req.flash('warning', "Careful not to make all admins plain users!!!");
-        // return res.redirect(`/users/${req.params.id}/edit`);
-    }
-
     // if (finalRole !== 'admin' && isAdmin) {
     //     req.flash('error', "You cannot make yourself")
     // }

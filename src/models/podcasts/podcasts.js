@@ -60,6 +60,8 @@ const getPodcastById = async (id) => {
                 podcasts.url,
                 podcasts.created_at,
                 podcasts.updated_at
+            FROM podcasts
+            WHERE podcasts.id = $1
         `;
 
         const result = await db.query(query, [id]);
