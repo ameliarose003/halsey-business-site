@@ -1,5 +1,6 @@
 import db from './db.js';
 import setupUsersDatabaseTables from './users-db-setup.js';
+// import 
 
 const createPodcastTableIfNotExists = `
     CREATE TABLE IF NOT EXISTS podcasts (
@@ -37,14 +38,6 @@ const createSlug = (...strings) => {
         .replace(/^-|-$/g, '');
 };
 
-// const insertPodcast = async(podcast, verbose = true) => {
-//     const slug = createSlug(podcast.title);
-
-//     const query = `
-//         INSERT INTO podcasts (id, title, description, video)
-//         VALUES ($1, $2, $3, $4, $5)
-//     `
-// };
 
 const allTablesExist = async() => {
     const tables = ['podcasts'];
@@ -60,7 +53,8 @@ const allTablesExist = async() => {
 };
 
 const lastSeedRowsExist = async() => {
-    return true;
+    const res = await db.query('SELECT COUNT(*) FROM podcasts');
+    return parseInt(res.rows[0].count) > 0;
 };
 
 const isAlreadyInitialized = async(verbose = true) => {
@@ -81,18 +75,20 @@ const isAlreadyInitialized = async(verbose = true) => {
 const setupDatabase = async() => {
     const verbose = process.env.ENABLE_SQL_LOGGING === 'true';
     try {
-        if (await isAlreadyInitialized(verbose)) {
-            setupUsersDatabaseTables(verbose);
-            if (verbose) console.log('DB already initialized - skipping setup.');
-            return true;
-        }
+        // if (await isAlreadyInitialized(verbose)) {
+        //     setupUsersDatabaseTables(verbose);
+        //     if (verbose) console.log('DB already initialized - skipping setup.');
+        //     return true;
+        // }
 
         if (verbose) console.log('Setting up database...');
 
         await db.query(createPodcastTableIfNotExists);
 
+        await setupUsersDatabaseTables(verbose);
+
         if (verbose) {
-            setupUsersDatabaseTables(verbose);
+            // await setupUsersDatabaseTables(verbose);
             console.log('Database setup complete');
         }
         return true;

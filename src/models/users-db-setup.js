@@ -65,7 +65,7 @@ const seedRolesAndUsers = async (verbose = true) => {
                 INSERT INTO roles (role_name, role_description) VALUES
                 ('user', 'Standard user with basic access'),
                 ('admin', 'Administrator with full system access')
-            ]`);
+            `);
             if (verbose) {
                 console.log('Roles seeded: user and admin');
             }
